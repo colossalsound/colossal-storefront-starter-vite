@@ -1,0 +1,12 @@
+{
+  "content": [
+    {
+      "type": "ProductCollection",
+      "props": {
+        "id": "products-1",
+        "title": "Products"
+      }
+    }
+  ],
+  "root": { "props": {} }
+}

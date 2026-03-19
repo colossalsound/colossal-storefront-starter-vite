@@ -1,0 +1,51 @@
+{
+  "root": {
+    "props": {}
+  },
+  "content": [
+    {
+      "type": "ProductDetail",
+      "props": {
+        "columns": [
+          {
+            "type": "ProductContent",
+            "props": {
+              "items": [
+                {
+                  "type": "ProductInfo",
+                  "props": {
+                    "id": "pi-1"
+                  }
+                },
+                {
+                  "type": "ProductPrice",
+                  "props": {
+                    "id": "pp-1"
+                  }
+                },
+                {
+                  "type": "ProductAddToCart",
+                  "props": {
+                    "id": "pac-1"
+                  }
+                }
+              ],
+              "id": "pc-1"
+            }
+          },
+          {
+            "type": "ProductGallery",
+            "props": {
+              "id": "pg-1",
+              "galleryStyle": "grid-2x2",
+              "enableLightbox": true
+            }
+          }
+        ],
+        "id": "pd-1",
+        "layoutType": "two-column"
+      }
+    }
+  ],
+  "zones": {}
+}
