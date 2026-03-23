@@ -1,5 +1,7 @@
 # Colossal Storefront (Vite Template)
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fcolossalsound%2Fcolossal-storefront-starter-vite&env=VITE_STORE_SLUG&envDescription=Your%20store%20UID%20from%20the%20Colossal%20dashboard&envLink=https%3A%2F%2Fcolossal.sh)
+
 A storefront template for [colossal.sh](https://colossal.sh) commerce backend. Built with Vite, React 19, TanStack Router, and Tailwind CSS 4.
 
 Uses [`@colossal-sh/storefront-sdk`](https://www.npmjs.com/package/@colossal-sh/storefront-sdk) to communicate with the Colossal backend (products, cart, checkout).
