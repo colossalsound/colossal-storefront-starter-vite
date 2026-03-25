@@ -1,3 +1,2 @@
-export const STORE_SLUG = import.meta.env.VITE_STORE_SLUG || "";
-export const API_URL: string | undefined =
-	import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1/graphql";
+export const STORE_UID = import.meta.env.VITE_STORE_UID || "";
+export const API_URL: string | undefined = import.meta.env.VITE_API_URL;

@@ -9,10 +9,10 @@ import { ProductContentRenderer } from "#/components/system/product-detail/produ
 import { ProductGallery } from "#/components/system/product-detail/product-gallery";
 import { ProductInfoRenderer } from "#/components/system/product-detail/product-info";
 import { ProductPriceRenderer } from "#/components/system/product-detail/product-price";
-import { STORE_SLUG } from "#/lib/constants";
+import { STORE_UID } from "#/lib/constants";
 
 function ProductCollectionRenderer({ title }: { title: string }) {
-	const { products } = useProducts(STORE_SLUG);
+	const { products } = useProducts(STORE_UID);
 	const { addItem } = useCartContext();
 	return (
 		<section className="px-4 pb-24 pt-16 sm:px-6 lg:px-8">

@@ -5,7 +5,7 @@ import {
 } from "@colossal-sh/storefront-sdk";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
-import { API_URL, STORE_SLUG } from "#/lib/constants";
+import { API_URL, STORE_UID } from "#/lib/constants";
 import { CartDrawer } from "./cart-drawer";
 import { Footer } from "./footer";
 import { Header } from "./header";
@@ -23,7 +23,7 @@ export function ClientShell({ children }: { children: React.ReactNode }) {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<CartProvider storeUid={STORE_SLUG}>
+			<CartProvider storeUid={STORE_UID}>
 				<StoreShell
 					cartOpen={cartOpen}
 					setCartOpen={setCartOpen}
@@ -50,7 +50,7 @@ function StoreShell({
 	searchOpen: boolean;
 	setSearchOpen: (open: boolean) => void;
 }) {
-	const { data } = useStore({ uid: STORE_SLUG });
+	const { data } = useStore({ uid: STORE_UID });
 	const storeName = data?.storeDetails?.name ?? "Your Store";
 
 	return (

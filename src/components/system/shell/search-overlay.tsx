@@ -2,7 +2,7 @@ import { useProducts } from "@colossal-sh/storefront-sdk";
 import { Link } from "@tanstack/react-router";
 import { Search, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { STORE_SLUG } from "#/lib/constants";
+import { STORE_UID } from "#/lib/constants";
 
 interface SearchOverlayProps {
 	open: boolean;
@@ -12,7 +12,7 @@ interface SearchOverlayProps {
 export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 	const [query, setQuery] = useState("");
 	const inputRef = useRef<HTMLInputElement>(null);
-	const { products } = useProducts(STORE_SLUG);
+	const { products } = useProducts(STORE_UID);
 
 	useEffect(() => {
 		if (open) {

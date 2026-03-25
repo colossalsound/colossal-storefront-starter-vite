@@ -1,12 +1,12 @@
 import { useCartContext, useProducts } from "@colossal-sh/storefront-sdk";
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductGrid } from "#/components/store/product-grid";
-import { STORE_SLUG } from "#/lib/constants";
+import { STORE_UID } from "#/lib/constants";
 
 export const Route = createFileRoute("/")({ component: Home });
 
 function Home() {
-	const { products } = useProducts(STORE_SLUG);
+	const { products } = useProducts(STORE_UID);
 	const { addItem } = useCartContext();
 
 	return (

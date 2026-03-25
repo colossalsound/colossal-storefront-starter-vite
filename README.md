@@ -1,7 +1,7 @@
 # Colossal Storefront (Vite Template)
 
 <p align="center">
-  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fcolossalsound%2Fcolossal-storefront-starter-vite&env=VITE_STORE_SLUG&envDescription=Your%20store%20UID%20from%20the%20Colossal%20dashboard&envLink=https%3A%2F%2Fcolossal.sh"><img src="https://vercel.com/button" alt="Deploy with Vercel"></a>
+  <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fcolossalsound%2Fcolossal-storefront-starter-vite&env=VITE_STORE_UID&envDescription=Your%20store%20UID%20from%20the%20Colossal%20dashboard&envLink=https%3A%2F%2Fcolossal.sh"><img src="https://vercel.com/button" alt="Deploy with Vercel"></a>
   <a href="https://stackblitz.com/github/colossalsound/colossal-storefront-starter-vite"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Open in StackBlitz"></a>
 </p>
 
@@ -18,10 +18,8 @@ pnpm install
 Set your store UID in `.env`:
 
 ```
-VITE_STORE_SLUG=<your-store-uid>
+VITE_STORE_UID=<your-store-uid>
 ```
-
-> **Note:** The env var is named `VITE_STORE_SLUG` for legacy reasons but the value is your **store UID** from the Colossal dashboard.
 
 Then start the dev server:
 
@@ -33,8 +31,7 @@ pnpm dev
 
 | Variable          | Description                                                                |
 | ----------------- | -------------------------------------------------------------------------- |
-| `VITE_STORE_SLUG` | Your store UID from the Colossal dashboard (required)                      |
-| `VITE_API_URL`    | Colossal API endpoint (defaults to `http://localhost:8000/api/v1/graphql`) |
+| `VITE_STORE_UID` | Your store UID from the Colossal dashboard (required) |
 
 ## Production Build
 
