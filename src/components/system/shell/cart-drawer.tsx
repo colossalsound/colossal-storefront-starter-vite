@@ -138,7 +138,7 @@ export function CartDrawer(_props: CartDrawerProps) {
 							<span className="font-semibold">${subtotal}</span>
 						</div>
 						<Button
-							className="w-full"
+							className="w-full cursor-pointer"
 							size="lg"
 							disabled={checkoutLoading || !cartId}
 							onClick={async () => {
@@ -165,7 +165,7 @@ export function CartDrawer(_props: CartDrawerProps) {
 							)}
 						</Button>
 						<DrawerClose asChild>
-							<Button variant="outline" className="w-full">
+							<Button variant="outline" className="w-full cursor-pointer">
 								Continue Shopping
 							</Button>
 						</DrawerClose>

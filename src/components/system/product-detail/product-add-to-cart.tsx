@@ -15,7 +15,7 @@ export function ProductAddToCartRenderer() {
 		<div>
 			<Button
 				size="lg"
-				className="w-full gap-2 text-sm"
+				className="w-full gap-2 text-sm cursor-pointer"
 				onClick={() => addItem(product.uid)}
 			>
 				<ShoppingBag className="h-4 w-4" />

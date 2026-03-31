@@ -24,7 +24,7 @@ export function Header({ storeName, onSearchClick }: HeaderProps) {
 					<button
 						type="button"
 						onClick={onSearchClick}
-						className="flex items-center gap-1 border border-border px-4 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
+						className="flex items-center gap-1 border border-border px-4 py-1.5 text-sm font-medium transition-colors hover:bg-muted cursor-pointer"
 					>
 						<Search className="mr-1 h-4 w-4" strokeWidth={1.75} />
 						Search
@@ -33,7 +33,7 @@ export function Header({ storeName, onSearchClick }: HeaderProps) {
 					<button
 						type="button"
 						onClick={() => openCart?.()}
-						className="flex items-center gap-1.5 border border-border px-4 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
+						className="flex items-center gap-1.5 border border-border px-4 py-1.5 text-sm font-medium transition-colors hover:bg-muted cursor-pointer"
 						aria-label={`Shopping cart${cartItemCount > 0 ? `, ${cartItemCount} items` : ""}`}
 					>
 						Cart

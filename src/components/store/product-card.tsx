@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import { useCallback, useState } from "react";
 import { Button } from "#/components/ui/button";
-import type { Product } from "./product-grid";
+import type { SimpleProduct } from "@colossal-sh/storefront-sdk";
 
 const GRADIENTS = [
 	"linear-gradient(145deg, #e8e8e8 0%, #c8c8c8 100%)",
@@ -16,20 +16,11 @@ const GRADIENTS = [
 ];
 
 interface ProductCardProps {
-	product: Product;
+	product: SimpleProduct;
 	onAddToCart?: (productUid: string) => void;
 	index?: number;
 }
 
-function getImages(product: Product): string[] {
-	if (product.images && product.images.length > 0) {
-		return product.images;
-	}
-	if (product.imageUrl) {
-		return [product.imageUrl, product.imageUrl, product.imageUrl];
-	}
-	return [];
-}
 
 export function ProductCard({
 	product,
@@ -37,7 +28,7 @@ export function ProductCard({
 	index = 0,
 }: ProductCardProps) {
 	const gradient = GRADIENTS[index % GRADIENTS.length];
-	const images = getImages(product);
+	const images = product.images
 	const [activeIndex, setActiveIndex] = useState(0);
 
 	const goTo = useCallback((i: number) => {
@@ -174,7 +165,7 @@ export function ProductCard({
 						<Button
 							variant="outline"
 							size="sm"
-							className="gap-2 border-primary/35 bg-background/90 px-3 text-[11px] font-semibold uppercase tracking-[0.18em] hover:bg-secondary"
+							className="gap-2 cursor-pointer border-primary/35 bg-background/90 px-3 text-[11px] font-semibold uppercase tracking-[0.18em] hover:bg-secondary"
 							onClick={() => onAddToCart?.(product.uid)}
 						>
 							<ShoppingBag className="h-3.5 w-3.5" />

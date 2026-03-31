@@ -16,7 +16,7 @@ function ProductCollectionRenderer({ title }: { title: string }) {
 	const { addItem } = useCartContext();
 	return (
 		<section className="px-4 pb-24 pt-16 sm:px-6 lg:px-8">
-			<div className="mx-auto max-w-[1400px]">
+			<div className="mx-auto max-w-350">
 				<div className="mb-10 flex items-end justify-between">
 					<h2 className="font-display text-2xl font-bold sm:text-3xl">
 						{title}
