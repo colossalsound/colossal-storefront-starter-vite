@@ -1,17 +1,8 @@
+import type { SimpleProduct } from "@colossal-sh/storefront-sdk";
 import { ProductCard } from "./product-card";
 
-export interface Product {
-	uid: string;
-	name: string;
-	tagline?: string | null;
-	formattedPrice: string;
-	price: number;
-	imageUrl?: string;
-	images?: string[];
-}
-
 interface ProductGridProps {
-	products: Product[];
+	products: SimpleProduct[];
 	onAddToCart?: (productUid: string) => void;
 }
 

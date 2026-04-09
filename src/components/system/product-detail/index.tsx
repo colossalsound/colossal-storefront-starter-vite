@@ -1,29 +1,18 @@
 import { useStoreProduct } from "@colossal-sh/storefront-sdk";
-import type { SlotComponent } from "@puckeditor/core";
 import { Link, useParams } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
-import { ProductAddToCartRenderer } from "./product-add-to-cart";
+import { ProductAddToCart } from "./product-add-to-cart";
 import { ProductGallery } from "./product-gallery";
-import { ProductInfoRenderer } from "./product-info";
-import { ProductPriceRenderer } from "./product-price";
+import { ProductInfo } from "./product-info";
+import { ProductPrice } from "./product-price";
 
-type LayoutType = "two-column" | "single-column";
-
-interface ProductDetailProps {
-	layoutType?: LayoutType;
-	columns?: SlotComponent;
-}
-
-export function ProductDetailRenderer({
-	layoutType = "two-column",
-	columns,
-}: ProductDetailProps) {
+export function ProductDetails() {
 	const { uid } = useParams({ strict: false }) as { uid: string };
 	const { data, isLoading } = useStoreProduct(uid);
 	const product = data?.product;
 
 	if (isLoading) {
-		return <ProductDetailSkeleton layoutType={layoutType} />;
+		return <ProductDetailSkeleton />;
 	}
 
 	if (!product) {
@@ -40,8 +29,6 @@ export function ProductDetailRenderer({
 		);
 	}
 
-	const isTwoColumn = layoutType === "two-column";
-
 	return (
 		<div className="mx-auto max-w-[1400px] px-4 py-8 sm:px-6 lg:px-8">
 			<Link
@@ -52,76 +39,45 @@ export function ProductDetailRenderer({
 				Back to store
 			</Link>
 
-			{columns ? (
-				columns({
-					style: isTwoColumn
-						? {
-								display: "grid",
-								gridTemplateColumns: "7fr 5fr",
-								gap: "3rem",
-								alignItems: "start",
-							}
-						: {
-								display: "flex",
-								flexDirection: "column" as const,
-								gap: "2rem",
-								maxWidth: "42rem",
-								margin: "0 auto",
-							},
-				})
-			) : (
-				<div
-					style={{
-						display: "grid",
-						gridTemplateColumns: "7fr 5fr",
-						gap: "3rem",
-						alignItems: "start",
-					}}
-				>
-					<ProductGallery />
-					<div className="flex flex-col gap-6 lg:sticky lg:top-24">
-						<ProductInfoRenderer />
-						<ProductPriceRenderer />
-						<ProductAddToCartRenderer />
-					</div>
+			<div
+				style={{
+					display: "grid",
+					gridTemplateColumns: "7fr 5fr",
+					gap: "3rem",
+					alignItems: "start",
+				}}
+			>
+				<ProductGallery variant="stack" />
+				<div className="flex flex-col gap-6 lg:sticky lg:top-24">
+					<ProductInfo />
+					<ProductPrice />
+					<ProductAddToCart />
 				</div>
-			)}
+			</div>
 		</div>
 	);
 }
 
-function ProductDetailSkeleton({ layoutType }: { layoutType: LayoutType }) {
-	const isTwoColumn = layoutType === "two-column";
-
+function ProductDetailSkeleton() {
 	return (
 		<div className="mx-auto max-w-[1400px] px-4 py-20 sm:px-6 lg:px-8">
 			<div className="animate-pulse space-y-8">
 				<div className="h-4 w-32 rounded bg-muted" />
-				{isTwoColumn ? (
-					<div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
-						<div className="grid grid-cols-2 gap-3 lg:col-span-7">
-							<div className="aspect-square bg-muted" />
-							<div className="aspect-square bg-muted" />
-							<div className="aspect-square bg-muted" />
-							<div className="aspect-square bg-muted" />
-						</div>
-						<div className="space-y-4 lg:col-span-5">
-							<div className="h-8 w-3/4 rounded bg-muted" />
-							<div className="h-4 w-1/2 rounded bg-muted" />
-							<div className="h-6 w-1/4 rounded bg-muted" />
-							<div className="h-20 w-full rounded bg-muted" />
-							<div className="h-11 w-full bg-muted" />
-						</div>
-					</div>
-				) : (
-					<div className="mx-auto max-w-2xl space-y-4">
+				<div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
+					<div className="grid grid-cols-2 gap-3 lg:col-span-7">
 						<div className="aspect-square bg-muted" />
+						<div className="aspect-square bg-muted" />
+						<div className="aspect-square bg-muted" />
+						<div className="aspect-square bg-muted" />
+					</div>
+					<div className="space-y-4 lg:col-span-5">
 						<div className="h-8 w-3/4 rounded bg-muted" />
 						<div className="h-4 w-1/2 rounded bg-muted" />
 						<div className="h-6 w-1/4 rounded bg-muted" />
+						<div className="h-20 w-full rounded bg-muted" />
 						<div className="h-11 w-full bg-muted" />
 					</div>
-				)}
+				</div>
 			</div>
 		</div>
 	);
