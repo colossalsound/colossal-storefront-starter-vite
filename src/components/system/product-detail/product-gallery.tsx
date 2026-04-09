@@ -1,18 +1,24 @@
 import { useStoreProduct } from "@colossal-sh/storefront-sdk";
 import { useParams } from "@tanstack/react-router";
 import { useState } from "react";
+import { GalleryFeatured } from "./gallery-featured";
+import { GalleryGrid } from "./gallery-grid";
+import { GalleryStack } from "./gallery-stack";
 import { ProductLightbox } from "./product-lightbox";
 
-interface ProductGalleryProps {
-	puck?: { dragRef: ((element: Element | null) => void) | null };
-}
+type GalleryVariant = "grid" | "stack" | "featured";
 
-export function ProductGallery({ puck }: ProductGalleryProps = {}) {
+export function ProductGallery({
+	variant = "grid",
+}: {
+	variant?: GalleryVariant;
+}) {
 	const { uid } = useParams({ strict: false }) as { uid: string };
 	const { data } = useStoreProduct(uid);
 	const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
 	const product = data?.product;
+	const productName = product?.name ?? "Product";
 
 	const images =
 		product?.defaultVariant?.media
@@ -22,10 +28,6 @@ export function ProductGallery({ puck }: ProductGalleryProps = {}) {
 	const galleryImages =
 		images.length === 1 ? [images[0], images[0], images[0]] : images;
 
-	const handleClick = (i: number) => {
-		setLightboxIndex(i);
-	};
-
 	if (galleryImages.length === 0) {
 		return (
 			<div className="flex aspect-square items-center justify-center bg-muted text-muted-foreground">
@@ -34,31 +36,30 @@ export function ProductGallery({ puck }: ProductGalleryProps = {}) {
 		);
 	}
 
-	return (
-		<div ref={puck?.dragRef as React.Ref<HTMLDivElement>}>
-			<div className="grid grid-cols-2 gap-3 sm:gap-4">
-				{galleryImages.map((src, i) => (
-					<button
-						type="button"
-						key={src}
-						onClick={() => handleClick(i)}
-						className="group/img relative overflow-hidden rounded-lg bg-muted"
-					>
-						<img
-							src={src}
-							alt={`${product?.name ?? "Product"} - ${i + 1}`}
-							className="aspect-square w-full object-cover transition-transform duration-500 group-hover/img:scale-[1.03]"
-						/>
-						<div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover/img:bg-black/10" />
-					</button>
-				))}
-			</div>
+	const Gallery =
+		variant === "stack"
+			? GalleryStack
+			: variant === "featured"
+				? GalleryFeatured
+				: GalleryGrid;
 
-			{lightboxIndex !== null && galleryImages.length > 0 && (
+	return (
+		<div
+			data-component-type="ProductGallery"
+			data-editor-variant={variant}
+			data-editor-ignore
+		>
+			<Gallery
+				images={galleryImages}
+				productName={productName}
+				onImageClick={setLightboxIndex}
+			/>
+
+			{lightboxIndex !== null && (
 				<ProductLightbox
 					images={galleryImages}
 					initialIndex={lightboxIndex}
-					productName={product?.name ?? "Product"}
+					productName={productName}
 					onClose={() => setLightboxIndex(null)}
 				/>
 			)}

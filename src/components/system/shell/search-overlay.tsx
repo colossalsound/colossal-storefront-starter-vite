@@ -80,6 +80,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 							placeholder="Search products..."
 							className="flex-1 bg-transparent text-base outline-none placeholder:text-muted-foreground"
 						/>
+
 						{query && (
 							<button
 								type="button"
@@ -96,8 +97,8 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 
 					<div className="max-h-[60vh] overflow-y-auto">
 						{!hasQuery && (
-							<div className="px-5 py-10 text-center text-sm text-muted-foreground">
-								Start typing to search...
+							<div className="px-5 py-10 text-center text-muted-foreground text-base">
+								Start typing what you want to find...
 							</div>
 						)}
 

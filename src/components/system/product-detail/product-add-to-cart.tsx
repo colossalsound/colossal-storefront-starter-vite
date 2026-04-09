@@ -3,7 +3,7 @@ import { useParams } from "@tanstack/react-router";
 import { ShoppingBag } from "lucide-react";
 import { Button } from "#/components/ui/button";
 
-export function ProductAddToCartRenderer() {
+export function ProductAddToCart() {
 	const { uid } = useParams({ strict: false }) as { uid: string };
 	const { data } = useStoreProduct(uid);
 	const { addItem } = useCartContext();
