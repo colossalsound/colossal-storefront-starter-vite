@@ -91,39 +91,42 @@ export function CartDrawer(_props: CartDrawerProps) {
 								<div className="flex min-w-0 flex-1 flex-col justify-between">
 									<div className="flex items-start justify-between gap-2">
 										<p className="truncate text-sm font-medium">{item.name}</p>
-										<button
-											type="button"
+										<Button
+											variant="ghost"
+											size="icon-xs"
 											onClick={() => removeItem?.(item.uid)}
-											className="text-muted-foreground transition-colors hover:text-foreground"
+											className="text-muted-foreground hover:text-foreground"
 										>
 											<X className="h-4 w-4" />
-										</button>
+										</Button>
 									</div>
 									<div className="flex items-center justify-between">
 										<div className="flex items-center gap-2">
-											<button
-												type="button"
+											<Button
+												variant="outline"
+												size="icon-sm"
 												onClick={() =>
 													updateQuantity?.(item.uid, item.quantity - 1)
 												}
-												className="flex h-7 w-7 items-center justify-center border text-muted-foreground transition-colors hover:text-foreground"
+												className="text-muted-foreground hover:text-foreground"
 											>
 												<Minus className="h-3 w-3" />
-											</button>
+											</Button>
 											<span className="w-6 text-center text-sm">
 												{item.quantity}
 											</span>
-											<button
-												type="button"
+											<Button
+												variant="outline"
+												size="icon-sm"
 												onClick={() =>
 													updateQuantity?.(item.uid, item.quantity + 1)
 												}
-												className="flex h-7 w-7 items-center justify-center border text-muted-foreground transition-colors hover:text-foreground"
+												className="text-muted-foreground hover:text-foreground"
 											>
 												<Plus className="h-3 w-3" />
-											</button>
+											</Button>
 										</div>
-										<p className="text-sm font-medium">{item.formattedPrice}</p>
+										<p className="text-sm font-medium">${(item.price * item.quantity).toFixed(2)}</p>
 									</div>
 								</div>
 							</div>
@@ -135,7 +138,7 @@ export function CartDrawer(_props: CartDrawerProps) {
 					<DrawerFooter className="border-t pt-4">
 						<div className="flex items-center justify-between py-1">
 							<span className="font-medium">Subtotal</span>
-							<span className="font-semibold">${subtotal}</span>
+							<span className="font-semibold">${subtotal.toFixed(2)}</span>
 						</div>
 						<Button
 							className="w-full cursor-pointer"

@@ -2,6 +2,7 @@ import { useProducts } from "@colossal-sh/storefront-sdk";
 import { Link } from "@tanstack/react-router";
 import { Search, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Button } from "#/components/ui/button";
 import { STORE_UID } from "#/lib/constants";
 
 interface SearchOverlayProps {
@@ -69,7 +70,7 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 			/>
 
 			<div className="relative mx-auto mt-0 w-full max-w-2xl animate-in fade-in slide-in-from-top-4 duration-200">
-				<div className="mx-4 mt-4 overflow-hidden border border-border bg-card shadow-2xl">
+				<div className="mx-4 mt-4 overflow-hidden rounded-lg border border-border bg-card shadow-2xl">
 					<div className="flex items-center gap-3 border-b border-border px-5 py-4">
 						<Search className="h-5 w-5 shrink-0 text-muted-foreground" />
 						<input
@@ -82,17 +83,15 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 						/>
 
 						{query && (
-							<button
-								type="button"
+							<Button
+								variant="ghost"
+								size="icon-xs"
 								onClick={() => setQuery("")}
 								className="shrink-0 text-muted-foreground hover:text-foreground"
 							>
 								<X className="h-4 w-4" />
-							</button>
+							</Button>
 						)}
-						<kbd className="hidden shrink-0 border border-border px-2 py-0.5 text-xs text-muted-foreground sm:inline-block">
-							ESC
-						</kbd>
 					</div>
 
 					<div className="max-h-[60vh] overflow-y-auto">
@@ -121,14 +120,14 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 										onClick={onClose}
 										className="flex items-center gap-4 px-3 py-3 transition-colors hover:bg-muted"
 									>
-										{product.imageUrl ? (
+										{product.images.length ? (
 											<img
-												src={product.imageUrl}
+												src={product.images[0]}
 												alt={product.name}
-												className="h-12 w-12 shrink-0 object-cover"
+												className="h-12 w-12 shrink-0 rounded-sm object-cover"
 											/>
 										) : (
-											<div className="h-12 w-12 shrink-0 bg-muted" />
+											<div className="h-12 w-12 shrink-0 rounded-sm bg-muted" />
 										)}
 										<div className="min-w-0 flex-1">
 											<p className="truncate text-sm font-medium">

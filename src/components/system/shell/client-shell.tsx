@@ -6,10 +6,10 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { API_URL, STORE_UID } from "#/lib/constants";
-import { CartDrawer } from "./cart-drawer";
-import { Footer } from "./footer";
-import { Header } from "./header";
-import { SearchOverlay } from "./search-overlay";
+import { CartDrawer } from "#/components/store/cart-drawer";
+import { Footer } from "#/components/store/footer";
+import { Header } from "#/components/store/header";
+import { SearchOverlay } from "#/components/store/search-overlay";
 
 if (API_URL) {
 	initStorefrontClient({ url: API_URL });
@@ -55,11 +55,14 @@ function StoreShell({
 
 	return (
 		<>
-			<Header storeName={storeName} onSearchClick={() => setSearchOpen(true)} />
+			<Header storeName={storeName} onSearchClick={() => setSearchOpen(true)} buttonStyle="default" size='default' layout='standard' links={[]} floating={false} />
 
 			<main className="min-h-[calc(100vh-4rem)]">{children}</main>
 
-			<Footer storeName={storeName} />
+			<Footer
+					storeName={storeName}
+					description="A curated collection of literature for the discerning reader. Every title hand-selected, every edition considered."
+				/>
 
 			<CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
 
