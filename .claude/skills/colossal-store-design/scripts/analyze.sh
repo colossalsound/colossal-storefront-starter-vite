@@ -7,7 +7,7 @@
 # Multiple images are sent as separate parts in one Gemini request,
 # allowing the model to see the full site across multiple screenshots.
 #
-# Requires: GEMINI_API_KEY env var, jq, python3
+# Requires: GEMINI_API_KEY env var, jq, node
 # Output: library/<store-slug>/{design.json, theme.css}
 
 set -euo pipefail
@@ -61,41 +61,38 @@ mkdir -p "$OUTPUT_DIR"
 
 echo "=> Encoding ${#IMAGE_PATHS[@]} image(s)..."
 
-# Build payload with multiple images via python
-python3 -c "
-import json, sys, base64, os
+# Build payload with multiple images via node
+node -e "
+const fs = require('fs');
+const path = require('path');
 
-prompt_file = sys.argv[1]
-output_file = sys.argv[2]
-image_paths = sys.argv[3:]
+const promptFile = process.argv[1];
+const outputFile = process.argv[2];
+const imagePaths = process.argv.slice(3);
 
-with open(prompt_file) as f:
-    prompt = f.read()
+let prompt = fs.readFileSync(promptFile, 'utf-8');
 
-if len(image_paths) > 1:
-    prompt += '\n\nNOTE: You are receiving multiple screenshots of the SAME store/website. They show different sections of the same page or different pages. Combine them into a SINGLE unified design.json — one meta, one theme, one header, one footer, one productCard, one productGrid, one featuredProducts, and one combined sections array covering ALL visible sections across all images. Do NOT produce separate analyses per image.'
-
-parts = [{'text': prompt}]
-
-for img_path in image_paths:
-    ext = os.path.splitext(img_path)[1].lower().lstrip('.')
-    mime_map = {'jpg': 'image/jpeg', 'jpeg': 'image/jpeg', 'png': 'image/png', 'webp': 'image/webp'}
-    mime = mime_map.get(ext, 'image/jpeg')
-
-    with open(img_path, 'rb') as f:
-        b64 = base64.b64encode(f.read()).decode('ascii')
-
-    parts.append({'inlineData': {'mimeType': mime, 'data': b64}})
-
-payload = {
-    'contents': [{'parts': parts}],
-    'generationConfig': {
-        'responseMimeType': 'application/json'
-    }
+if (imagePaths.length > 1) {
+  prompt += '\n\nNOTE: You are receiving multiple screenshots of the SAME store/website. They show different sections of the same page or different pages. Combine them into a SINGLE unified design.json — one meta, one theme, one header, one footer, one productCard, one productGrid, one featuredProducts, and one combined sections array covering ALL visible sections across all images. Do NOT produce separate analyses per image.';
 }
 
-with open(output_file, 'w') as f:
-    json.dump(payload, f)
+const parts = [{ text: prompt }];
+
+const mimeMap = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
+
+for (const imgPath of imagePaths) {
+  const ext = path.extname(imgPath).toLowerCase().slice(1);
+  const mime = mimeMap[ext] || 'image/jpeg';
+  const b64 = fs.readFileSync(imgPath).toString('base64');
+  parts.push({ inlineData: { mimeType: mime, data: b64 } });
+}
+
+const payload = {
+  contents: [{ parts }],
+  generationConfig: { responseMimeType: 'application/json' }
+};
+
+fs.writeFileSync(outputFile, JSON.stringify(payload));
 " "$PROMPT_FILE" "$TMP_DIR/payload.json" "${IMAGE_PATHS[@]}"
 
 echo "=> Sending to Gemini ($MODEL)..."
@@ -121,23 +118,23 @@ if [ -z "$RESULT" ] || [ "$RESULT" = "null" ]; then
 fi
 
 # Save design.json (pretty-printed, unwrap array if needed, strip links)
-echo "$RESULT" | python3 -c "
-import json, sys
-data = json.load(sys.stdin)
-if isinstance(data, list):
-    data = data[0]
-# Strip links — these are never extracted, added by customer later
-if 'header' in data:
-    data['header'].pop('links', None)
-if 'footer' in data:
-    data['footer'].pop('columns', None)
-with open(sys.argv[1], 'w') as f:
-    json.dump(data, f, indent=2)
+echo "$RESULT" | node -e "
+const fs = require('fs');
+let input = '';
+process.stdin.on('data', c => input += c);
+process.stdin.on('end', () => {
+  let data = JSON.parse(input);
+  if (Array.isArray(data)) data = data[0];
+  // Strip links — these are never extracted, added by customer later
+  if (data.header) delete data.header.links;
+  if (data.footer) delete data.footer.columns;
+  fs.writeFileSync(process.argv[1], JSON.stringify(data, null, 2));
+});
 " "$OUTPUT_DIR/design.json"
 echo "=> Saved design.json"
 
 # Generate theme.css
-python3 "$SCRIPT_DIR/gen-theme.py" "$OUTPUT_DIR/design.json" "$OUTPUT_DIR/theme.css"
+node "$SCRIPT_DIR/gen-theme.cjs" "$OUTPUT_DIR/design.json" "$OUTPUT_DIR/theme.css"
 echo "=> Saved theme.css"
 
 echo ""
@@ -146,12 +143,11 @@ echo "  design.json  $(wc -c < "$OUTPUT_DIR/design.json" | tr -d ' ') bytes"
 echo "  theme.css    $(wc -c < "$OUTPUT_DIR/theme.css" | tr -d ' ') bytes"
 
 # Print summary
-python3 -c "
-import json
-d = json.load(open('$OUTPUT_DIR/design.json'))
-m = d['meta']
-print(f\"  Industry:  {m['industry']}\")
-print(f\"  Aesthetic: {m['aesthetic']}\")
-print(f\"  Mood:      {m['mood']}\")
-print(f\"  Sections:  {', '.join(m['sectionNames'])}\")
+node -e "
+const d = JSON.parse(require('fs').readFileSync('$OUTPUT_DIR/design.json', 'utf-8'));
+const m = d.meta;
+console.log('  Industry:  ' + m.industry);
+console.log('  Aesthetic: ' + m.aesthetic);
+console.log('  Mood:      ' + m.mood);
+console.log('  Sections:  ' + m.sectionNames.join(', '));
 "

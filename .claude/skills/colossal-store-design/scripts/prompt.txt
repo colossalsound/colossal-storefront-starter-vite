@@ -7,6 +7,7 @@ Return ONLY valid JSON, no markdown fences, no commentary.
 
 {
   "meta": {
+    "name": "<string: 1-2 word short display name for this design reference, e.g. 'Comfort Basics', 'Luxe Beauty', 'Dark Coffee', 'Pop Accessories'. Should be memorable and instantly convey the design vibe. No store branding.>",
     "description": "<string: 2-3 sentence description of the store visual identity, target market, and overall aesthetic. No real store name. E.g. A dark luxury fashion store with editorial layout, high-contrast typography, and full-bleed hero imagery targeting high-end consumers.>",
     "industry": "<string: e.g. fashion, coffee, electronics, beauty, home-decor, food, books, jewelry, sports, lifestyle>",
     "aesthetic": "<string: dominant aesthetic e.g. minimal-luxury, brutalist, organic-warm, bold-maximalist, editorial, soft-pastel, industrial, retro, modern-clean>",

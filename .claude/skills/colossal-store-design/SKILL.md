@@ -89,7 +89,7 @@ Post-processing checks:
 ### Prerequisites
 
 - `GEMINI_API_KEY` environment variable
-- `jq`, `python3`, `curl`
+- `jq`, `node`, `curl`
 
 ---
 
