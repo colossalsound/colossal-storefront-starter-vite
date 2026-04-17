@@ -25,10 +25,7 @@ export function ProductGallery({
 			?.filter((m) => m.type === "IMAGE" && m.status === "READY" && m.url)
 			.map((m) => m.url as string) ?? [];
 
-	const galleryImages =
-		images.length === 1 ? [images[0], images[0], images[0]] : images;
-
-	if (galleryImages.length === 0) {
+	if (images.length === 0) {
 		return (
 			<div className="flex aspect-square items-center justify-center bg-muted text-muted-foreground">
 				No images
@@ -50,14 +47,14 @@ export function ProductGallery({
 			data-editor-ignore
 		>
 			<Gallery
-				images={galleryImages}
+				images={images}
 				productName={productName}
 				onImageClick={setLightboxIndex}
 			/>
 
 			{lightboxIndex !== null && (
 				<ProductLightbox
-					images={galleryImages}
+					images={images}
 					initialIndex={lightboxIndex}
 					productName={productName}
 					onClose={() => setLightboxIndex(null)}
