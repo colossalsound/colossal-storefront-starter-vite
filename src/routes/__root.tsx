@@ -1,6 +1,7 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { PageEditor } from "@colossal-sh/visual-editor";
 import type { ComponentRegistry, FieldLabels } from "@colossal-sh/visual-editor";
+import { useQueryClient } from "@tanstack/react-query";
 import { ClientShell } from "#/components/system/shell/client-shell";
 
 const registry: ComponentRegistry = {
@@ -39,9 +40,23 @@ const parentOrigin = import.meta.env.VITE_PARENT_ORIGIN || null;
 function RootComponent() {
 	return (
 		<ClientShell>
-			<PageEditor registry={registry} fieldLabels={fieldLabels} parentOrigin={parentOrigin}>
+			<PreviewEditor>
 				<Outlet />
-			</PageEditor>
+			</PreviewEditor>
 		</ClientShell>
+	);
+}
+
+function PreviewEditor({ children }: { children: React.ReactNode }) {
+	const queryClient = useQueryClient();
+	return (
+		<PageEditor
+			registry={registry}
+			fieldLabels={fieldLabels}
+			parentOrigin={parentOrigin}
+			onRefresh={() => queryClient.invalidateQueries()}
+		>
+			{children}
+		</PageEditor>
 	);
 }
