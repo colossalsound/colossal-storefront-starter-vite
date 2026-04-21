@@ -64,14 +64,14 @@ export function ProductCard({
 
 	return (
 		<div
-			className="group"
+			className="group flex h-full flex-col"
 			style={{
 				animation: "fade-up 0.6s ease-out both",
 				animationDelay: `${index * 100}ms`,
 			}}
 		>
 			<div
-				className={`overflow-hidden rounded-lg border border-border/60 bg-card transition-all duration-500 ${hoverClasses}`}
+				className={`flex h-full flex-col overflow-hidden rounded-lg border border-border/60 bg-card transition-all duration-500 ${hoverClasses}`}
 			>
 				{/* Image */}
 				<div
@@ -170,7 +170,7 @@ export function ProductCard({
 				</div>
 
 				{/* Content */}
-				<div className="p-5 sm:p-6">
+				<div className="flex flex-1 flex-col p-5 sm:p-6">
 					<Link
 						to="/product/$uid"
 						params={{ uid: product.uid }}
@@ -199,7 +199,7 @@ export function ProductCard({
 
 					{isOverlay && (
 						<p
-							className="mt-3 text-sm font-semibold tracking-wide"
+							className="mt-auto pt-3 text-sm font-semibold tracking-wide"
 							data-editable-entity="product"
 							data-editable-id={product.uid}
 							data-editable-field="price"
@@ -209,7 +209,7 @@ export function ProductCard({
 					)}
 
 					{!isOverlay && (
-						<div className="mt-5 flex items-center justify-between gap-3 border-t border-border/60 pt-4">
+						<div className="mt-auto flex items-center justify-between gap-3 border-t border-border/60 pt-4">
 							<p
 								className="text-sm font-semibold tracking-wide"
 								data-editable-entity="product"
