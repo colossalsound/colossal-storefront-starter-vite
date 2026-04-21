@@ -145,6 +145,7 @@ export function ProductCard({
 							{isOverlay && (
 								<button
 									type="button"
+									data-editor-ignore
 									className="absolute inset-x-0 bottom-0 flex translate-y-0 cursor-pointer items-center justify-center bg-primary py-2.5 text-[10px] font-medium uppercase tracking-[0.2em] text-primary-foreground transition-transform duration-300 ease-out hover:opacity-90 md:translate-y-full md:group-hover:translate-y-0"
 									onClick={(e) => {
 										e.preventDefault();
@@ -223,6 +224,7 @@ export function ProductCard({
 								<Button
 									variant="outline"
 									size="sm"
+									data-editor-ignore
 									className="cursor-pointer gap-2 border-primary/35 bg-background/90 px-3 text-[11px] font-semibold uppercase tracking-[0.18em] hover:bg-secondary"
 									onClick={() => onAddToCart?.(product.uid)}
 								>
@@ -235,6 +237,7 @@ export function ProductCard({
 								<Button
 									variant="ghost"
 									size="sm"
+									data-editor-ignore
 									className="cursor-pointer gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground hover:text-foreground"
 									onClick={() => onAddToCart?.(product.uid)}
 								>
@@ -247,6 +250,7 @@ export function ProductCard({
 								<Button
 									variant="ghost"
 									size="icon-sm"
+									data-editor-ignore
 									className="cursor-pointer text-muted-foreground hover:text-foreground"
 									onClick={() => onAddToCart?.(product.uid)}
 									aria-label="Add to cart"
