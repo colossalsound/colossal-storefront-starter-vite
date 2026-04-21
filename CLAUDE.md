@@ -128,6 +128,8 @@ Configured in `client-shell.tsx`. Props from design.json `footer` field when usi
 | `colorScheme` | `"default" \| "inverted" \| "custom"` | `"default"` | `"inverted"` swaps fg/bg |
 | `colors` | `FooterColors` | — | Only used with `colorScheme="custom"` |
 
+`FooterColumn` shape: `{ title: string; links?: { label, href }[]; lines?: string[] }`. Use `links` for nav lists and `lines` for plain-text rows (e.g. address, contact info). The two can be combined in one column.
+
 ### Product Card (`src/components/store/product-card.tsx`)
 
 Configured via `ProductGrid` props in `index.tsx`.
@@ -138,3 +140,15 @@ Configured via `ProductGrid` props in `index.tsx`.
 | `cartButton` | `"outline" \| "ghost" \| "icon-only" \| "overlay"` | `"outline"` | Cart button style |
 | `cartButtonIcon` | `"bag" \| "plus"` | `"bag"` | Icon for ghost/icon-only styles |
 | `carousel` | `"none" \| "hover"` | `"hover"` | `"none"`: first image only. `"hover"`: arrows + dots |
+
+Cards stretch to equal heights within a grid row — the content column is a flex column and the price/cart row is pinned to the bottom, so short taglines don't shrink the card.
+
+### Featured Products (`src/components/store/featured-products.tsx`)
+
+Curated 3-column highlight section, typically used on the home page above or below the main product grid.
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `products` | `SimpleProduct[]` | — | Products to display (required). Renders nothing when empty |
+| `label` | `string` | `"Staff Picks"` | Small uppercase label above the heading |
+| `heading` | `string` | `"Notable Selections"` | Section heading |
