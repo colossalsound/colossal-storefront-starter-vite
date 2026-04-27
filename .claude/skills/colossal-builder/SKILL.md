@@ -167,8 +167,9 @@ Generate hero images, editorial photography, lifestyle shots using the Gemini AP
 
 ```bash
 IMG_B64=$(base64 < input.png)
+BASE_URL="${GOOGLE_AI_BASE_URL:-https://generativelanguage.googleapis.com}"
 curl -s -X POST \
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent" \
+  "$BASE_URL/v1beta/models/gemini-3-pro-image-preview:generateContent" \
   -H "x-goog-api-key: $GEMINI_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{

@@ -95,9 +95,11 @@ const payload = {
 fs.writeFileSync(outputFile, JSON.stringify(payload));
 " "$PROMPT_FILE" "$TMP_DIR/payload.json" "${IMAGE_PATHS[@]}"
 
+BASE_URL="${GOOGLE_AI_BASE_URL:-https://generativelanguage.googleapis.com}"
+
 echo "=> Sending to Gemini ($MODEL)..."
 RESPONSE=$(curl -s -X POST \
-  "https://generativelanguage.googleapis.com/v1beta/models/$MODEL:generateContent" \
+  "$BASE_URL/v1beta/models/$MODEL:generateContent" \
   -H "x-goog-api-key: $GEMINI_API_KEY" \
   -H "Content-Type: application/json" \
   -d @"$TMP_DIR/payload.json")

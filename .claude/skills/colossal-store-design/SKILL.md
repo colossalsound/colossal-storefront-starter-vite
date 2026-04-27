@@ -156,8 +156,9 @@ type CardCarousel = "none" | "hover";
 Model: `gemini-3.1-pro-preview`
 
 ```bash
+BASE_URL="${GOOGLE_AI_BASE_URL:-https://generativelanguage.googleapis.com}"
 curl -s -X POST \
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent" \
+  "$BASE_URL/v1beta/models/gemini-3.1-pro-preview:generateContent" \
   -H "x-goog-api-key: $GEMINI_API_KEY" \
   -H "Content-Type: application/json" \
   -d @payload.json
