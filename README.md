@@ -47,54 +47,22 @@ Outputs a static SPA to `dist/` ready for deployment to Vercel or any static hos
 ```
 src/
   routes/           # File-based routing (TanStack Router)
-    __root.tsx      # Root layout (shell + Puck editor wrapper)
+    __root.tsx      # Root layout (shell + visual editor wrapper)
     index.tsx       # Home page
     product/$uid.tsx # Product detail page
   components/
-    store/          # Product grid, product card
+    store/          # Product grid, product card, header, footer, etc.
     system/
-      shell/        # Header, footer, cart drawer, search overlay
+      shell/        # Client shell, cart drawer, search overlay
       product-detail/ # Product gallery, info, price, add-to-cart
-      puck/         # Visual page editor (dev-only)
     ui/             # shadcn/ui components
   lib/
     constants.ts    # Store UID + API URL
     utils.ts        # Tailwind merge helper
-    puck-defaults.ts # Default page layouts for Puck
-  puck.config.tsx   # Puck component definitions
   router.tsx        # TanStack Router setup
   main.tsx          # App entry point
   styles.css        # Tailwind CSS + theme
-puck-data/          # Saved page layouts (JSON)
 ```
-
-## LLM Skills
-
-This template's dependencies include LLM skills (via TanStack's skills system) that provide context to AI assistants like Claude Code. These are bundled with `@tanstack/router-plugin`, `@tanstack/router-core`, and other packages. They help LLMs understand routing patterns, data loading, and framework conventions when working on this codebase.
-
-## Visual Page Editor (Puck)
-
-The template includes a [Puck](https://puckeditor.com) visual page editor for composing page layouts.
-
-**Dev mode only:** In development, an "Edit Page" button appears at the bottom of every page. Click it to enter the visual editor where you can drag/drop components, rearrange layouts, and save changes. Saved layouts are stored as JSON files in `puck-data/`.
-
-**Production:** The editor UI is excluded from the production bundle. Pages render from the saved JSON layout data.
-
-### Available Puck Components
-
-| Component         | Description                                   |
-| ----------------- | --------------------------------------------- |
-| ProductCollection | Product grid with title                       |
-| ProductDetail     | Two-column or single-column product layout    |
-| ProductGallery    | Image gallery (grid, carousel, hero, stacked) |
-| ProductContent    | Container for product info/price/add-to-cart  |
-| ProductInfo       | Product name, tagline, description            |
-| ProductPrice      | Price display                                 |
-| ProductAddToCart  | Add to cart button                            |
-| TextSection       | Heading + body text                           |
-| ImageBlock        | Full-width image                              |
-| BlockQuote        | Quote with attribution                        |
-| CTABanner         | Call-to-action with button                    |
 
 ## Stack
 
@@ -104,7 +72,6 @@ The template includes a [Puck](https://puckeditor.com) visual page editor for co
 - [TanStack Query](https://tanstack.com/query) - Data fetching
 - [Tailwind CSS 4](https://tailwindcss.com) - Styling
 - [shadcn/ui](https://ui.shadcn.com) - UI components (Base UI primitives)
-- [Puck](https://puckeditor.com) - Visual page editor (dev-only)
 - [Biome](https://biomejs.dev) - Linting & formatting
 - [Vitest](https://vitest.dev) - Testing
 
