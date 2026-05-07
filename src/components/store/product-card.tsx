@@ -30,6 +30,9 @@ export function ProductCard({
 }: ProductCardProps) {
 	const images = product.images;
 	const [activeIndex, setActiveIndex] = useState(0);
+	const [failed, setFailed] = useState<Set<string>>(() => new Set());
+	const allFailed = images.length > 0 && failed.size >= images.length;
+	const showFallback = images.length === 0 || allFailed;
 
 	const prev = useCallback(
 		(e: React.MouseEvent) => {
@@ -78,7 +81,7 @@ export function ProductCard({
 					data-editor-ignore
 					className="relative aspect-4/5 overflow-hidden border-b border-border bg-muted/20"
 				>
-					{images.length > 0 ? (
+					{!showFallback ? (
 						<>
 							<Link
 								to="/product/$uid"
@@ -91,14 +94,33 @@ export function ProductCard({
 										transform: `translateX(-${activeIndex * 100}%)`,
 									}}
 								>
-									{images.map((src, i) => (
-										<img
-											key={src}
-											src={src}
-											alt={`${product.name} - ${i + 1}`}
-											className="h-full w-full shrink-0 object-cover"
-										/>
-									))}
+									{images.map((src, i) =>
+										failed.has(src) ? (
+											<div
+												key={src}
+												className="flex h-full w-full shrink-0 items-center justify-center bg-muted"
+											>
+												<span className="font-display text-7xl italic text-muted-foreground/20">
+													{product.name.charAt(0)}
+												</span>
+											</div>
+										) : (
+											<img
+												key={src}
+												src={src}
+												alt={`${product.name} - ${i + 1}`}
+												onError={() =>
+													setFailed((prev) => {
+														if (prev.has(src)) return prev;
+														const next = new Set(prev);
+														next.add(src);
+														return next;
+													})
+												}
+												className="h-full w-full shrink-0 object-cover"
+											/>
+										),
+									)}
 								</div>
 							</Link>
 
